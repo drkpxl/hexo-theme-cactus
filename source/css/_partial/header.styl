@@ -77,41 +77,6 @@ if $logo-grayout
       -webkit-filter: none
 
 @media screen and (max-width: 480px)
-  #header #title
-    display: table
-    margin-right: 5rem
-    min-height: $logo-height
-    h1
-      display: table-cell
-      vertical-align: middle
-
-  #header #nav
-    ul
-      a:hover
-        background: none
-
-      li
-        display: none
-        border-right: 0
-
-      li.icon
-        position: absolute
-        top: 77px
-        right: 1rem
-        display: inline-block
-        text-align: center
-
-    ul.responsive
-      li
-        display: block
-    
-    ul 
-      a[aria-label="Menu"]
-        display: inline-block
-        min-width: 48px
-        min-height: 48px
-
-    li:not(:first-child)
-      padding-top: 1rem
-      padding-left: $logo-width + 20px
-      font-size: 1rem
+  #header
+    #logo
+      display: none
