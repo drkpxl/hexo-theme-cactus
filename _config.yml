@@ -15,9 +15,9 @@ direction: ltr
 # languages/*.yml
 nav:
   home: /
-  about: /pages/about/
+  about: /about/
   articles: /archives/
-  bluesky: /pages/blue-sky/
+  bluesky: /blue-sky/
   projects: http://github.com/drkpxl
 
 
