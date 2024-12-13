@@ -5,13 +5,6 @@
   <%- js('lib/jquery/jquery.min') %>
 <% } %>
 
-<% if (page.photos && page.photos.length) { %>
-  <% if (isCdnEnable('justified_gallery_js')) {%>
-    <%- getCdnScript('justified_gallery_js') %>
-  <% } else { %>
-    <%- js('lib/justified-gallery/js/jquery.justifiedGallery.min.js') %>
-  <% } %>
-<% } %>
 
 <!-- clipboard -->
 <% if (is_post()){ %>
@@ -110,6 +103,7 @@
         }());
     </script>
 <% } %>
+
 <!-- utterances Comments -->
 <% if (page.comments && theme.utterances.enabled && theme.utterances.repo && theme.utterances.issue_term && theme.utterances.theme){ %>
     <script type="text/javascript">

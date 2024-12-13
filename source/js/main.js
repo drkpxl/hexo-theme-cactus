@@ -1,16 +1,7 @@
-/**
- * Sets up Justified Gallery.
- */
-if (!!$.prototype.justifiedGallery) {
-  var options = {
-    rowHeight: 140,
-    margins: 4,
-    lastRow: "justify"
-  };
-  $(".article-gallery").justifiedGallery(options);
-}
+
 
 $(document).ready(function() {
+
 
   /**
    * Shows the responsive navigation menu on mobile.
@@ -19,9 +10,8 @@ $(document).ready(function() {
     $("#header > #nav > ul").toggleClass("responsive");
   });
 
-
   /**
-   * Controls the different versions of  the menu in blog post articles 
+   * Controls the different versions of the menu in blog post articles 
    * for Desktop, tablet and mobile.
    */
   if ($(".post").length) {
@@ -55,24 +45,40 @@ $(document).ready(function() {
      * Add a scroll listener to the menu to hide/show the navigation links.
      */
     if (menu.length) {
+      var lastScrollTop = 0;
+      var isScrolling;
+
       $(window).on("scroll", function() {
-        var topDistance = menu.offset().top;
+        var scrollTop = $(window).scrollTop();
+        
+        // Clear the timeout throughout the scroll
+        window.clearTimeout(isScrolling);
 
-        // hide only the navigation links on desktop
-        if (!nav.is(":visible") && topDistance < 50) {
-          nav.show();
-        } else if (nav.is(":visible") && topDistance > 100) {
-          nav.hide();
-        }
+        // Set a timeout to run after scrolling ends
+        isScrolling = setTimeout(function() {
+          // Show nav when scrolling up or near the top
+          if (scrollTop < lastScrollTop || scrollTop < 50) {
+            nav.fadeIn(200);
+            $("#menu-icon-tablet").fadeIn(200);
+            $("#top-icon-tablet").fadeOut(200);
+          } else {
+            // Only hide nav if we're not at the bottom of the page
+            if ((window.innerHeight + scrollTop) < $(document).height() - 50) {
+              nav.fadeOut(200);
+              $("#menu-icon-tablet").fadeOut(200);
+              $("#top-icon-tablet").fadeIn(200);
+            }
+          }
+          lastScrollTop = scrollTop;
+        }, 100);
+      });
 
-        // on tablet, hide the navigation icon as well and show a "scroll to top
-        // icon" instead
-        if ( ! $( "#menu-icon" ).is(":visible") && topDistance < 50 ) {
-          $("#menu-icon-tablet").show();
-          $("#top-icon-tablet").hide();
-        } else if (! $( "#menu-icon" ).is(":visible") && topDistance > 100) {
-          $("#menu-icon-tablet").hide();
-          $("#top-icon-tablet").show();
+      // Show navigation when hovering near the top of the screen
+      $(document).on('mousemove', function(e) {
+        if (e.clientY < 50) {
+          nav.fadeIn(200);
+          $("#menu-icon-tablet").fadeIn(200);
+          $("#top-icon-tablet").fadeOut(200);
         }
       });
     }
@@ -81,21 +87,21 @@ $(document).ready(function() {
      * Show mobile navigation menu after scrolling upwards,
      * hide it again after scrolling downwards.
      */
-    if ($( "#footer-post").length) {
+    if ($("#footer-post").length) {
       var lastScrollTop = 0;
       $(window).on("scroll", function() {
         var topDistance = $(window).scrollTop();
 
-        if (topDistance > lastScrollTop){
-          // downscroll -> show menu
-          $("#footer-post").hide();
+        if (topDistance > lastScrollTop) {
+          // downscroll -> hide menu
+          $("#footer-post").fadeOut(200);
         } else {
-          // upscroll -> hide menu
-          $("#footer-post").show();
+          // upscroll -> show menu
+          $("#footer-post").fadeIn(200);
         }
         lastScrollTop = topDistance;
 
-        // close all submenu"s on scroll
+        // close all submenu's on scroll
         $("#nav-footer").hide();
         $("#toc-footer").hide();
         $("#share-footer").hide();
